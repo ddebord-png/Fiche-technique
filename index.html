@@ -542,7 +542,7 @@
     const formData = new FormData(form);
 
     // Envoi via EmailJS
-    emailjs.sendForm('service_3p75nh5', 'template_kt17eqi', form)
+    emailjs.send("service_3p75nh5","template_kt17eqi");
       .then(function() {
         document.getElementById('successMessage').style.display = 'block';
         form.reset();
