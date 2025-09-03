@@ -265,6 +265,13 @@
             }
         }
     </style>
+    <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
+<script>
+  (function(){
+    emailjs.init("service_3p75nh5"); // Remplacez par votre user_id EmailJS
+  })();
+</script>
+    
 </head>
 <body>
     <div class="container">
@@ -522,8 +529,30 @@
             document.getElementById('totalEstime').textContent = total.toFixed(2);
         }
 
-        function envoyerFiche(event) {
-            event.preventDefault();
+   function envoyerFiche(event) {
+    event.preventDefault();
+
+    const form = document.getElementById('ficheForm');
+    if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+    }
+
+    // Préparez les données à envoyer
+    const formData = new FormData(form);
+
+    // Envoi via EmailJS
+    emailjs.sendForm('service_3p75nh5', 'service_3p75nh5', form)
+      .then(function() {
+        document.getElementById('successMessage').style.display = 'block';
+        form.reset();
+        document.getElementById('date').value = new Date().toISOString().split('T')[0];
+        calculerTotal();
+        window.scrollTo(0, 0);
+      }, function(error) {
+        alert('Erreur lors de l\'envoi : ' + error.text);
+      });
+}
             
             // Validation
             const form = document.getElementById('ficheForm');
